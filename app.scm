@@ -3,6 +3,7 @@
 (use dissector)
 
 (server-port 4000)
+(debug-log (current-output-port))
 
 ;; (nif (eq? 1 1) "false" (display "true") "true") => "true"
 (define-syntax nif
@@ -22,14 +23,14 @@
            [params (request-content-query req)]
            [timestamp (alist-ref 'timestamp params)]
            [nonce (alist-ref 'nonce params)]
-           [signature (alist-ref 'signature params)])
-      (string=? signature (mk-signature timestamp nonce token)))))
+           [signature (alist-ref 'signature params)]
+           [echostr (alist-ref 'echostr params)])
+      (if (string=? signature (mk-signature timestamp nonce token))
+          echostr
+          "not validate"))))
 
 ;; for /
 (add-route '("") (lambda (req)
-                   (nif (validate req)
-                        "validate not ok"
-                        (display "Validate OK")
-                        "success")))
+                   (validate req)))
 
 (start-server)
