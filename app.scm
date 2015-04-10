@@ -32,7 +32,8 @@
                                (async-response to from
                                                "bing bing")
                                (async-response to from
-                                               "bing bing bing ~") ""]
+                                               "bing bing bing ~")
+                               (finish-async-response)]
                               [else
                                (sync-response to from
                                               "Don't know what to say...")]))))

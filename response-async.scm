@@ -13,3 +13,8 @@
                                            ("msgtype" . "text")
                                            ("text". #(("content" . ,msg)))))))])
       (with-input-from-request req-url json-msg read-string))))
+
+;; return a emtpy string when finished register async response
+(define finish-async-response
+  (lambda ()
+    ""))
