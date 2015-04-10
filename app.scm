@@ -16,7 +16,6 @@
              (let* ([res-buf (mk-res-buffer)] ; response buffer
                     [form    (request-content-form req)])
                (res-buf (validate req))
-               (dissect req)
 
                (when form ; POST method?
                  (res-buf (let* ([reader (mk-message-reader
@@ -29,11 +28,11 @@
                               [(|hello|)
                                (sync-response to from
                                               "Hello From Chicken!")]
-                              #;[(|fox say| |fox|)
+                              [(|fox say| |fox|)
                                (async-response to from
                                                "bing bing")
                                (async-response to from
-                                               "bing bing bing ~")]
+                                               "bing bing bing ~") ""]
                               [else
                                (sync-response to from
                                               "Don't know what to say...")]))))
