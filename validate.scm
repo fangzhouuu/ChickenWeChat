@@ -1,6 +1,6 @@
 ;; validation
-(use simple-sha1)
 (include "utils")
+(use simple-sha1)
 
 (define validate
   (lambda (req)

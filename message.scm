@@ -1,10 +1,6 @@
 (use ssax)
 (include "utils")
 
-#;(define xml-message
-  (lambda (xml)
-    (vector 'message ())))
-
 ;; order: ToUserName FromUserName CreateTime MsgType Content
 (define mk-message-reader
   (lambda (msg-lst)
