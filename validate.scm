@@ -9,9 +9,11 @@
            [timestamp (alist-ref 'timestamp params)]
            [nonce     (alist-ref 'nonce params)]
            [signature (alist-ref 'signature params)]
-           [echostr   (alist-ref 'echostr params)])
+           ;; if there is no echostr, return "" instead of #f
+           [echostr   (alist-ref 'echostr params eqv? "")])
       (nif (string=? signature (mk-signature timestamp nonce token))
-           "not validate"
+           (begin (log "not validate") "not validate")
+           (log "validate OK")
            echostr))))
 
 (define mk-signature
