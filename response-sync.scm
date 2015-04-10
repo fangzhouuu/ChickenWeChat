@@ -9,7 +9,6 @@
                       (MsgType "text")
                       (Content ,msg)
                       (CreateTime ,(current-unix-time)))
-                    cdata-section-elements: '(FromUserName
-                                              ToUserName
-                                              MsgType
-                                              Content))))
+                    cdata-section-elements: '(FromUserName ToUserName
+                                              MsgType Content))))
+
