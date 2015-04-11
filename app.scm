@@ -1,10 +1,10 @@
 ;; basic wechat server
 (use spiffy intarweb uri-common srfi-13)
 (use dissector)
-
-(include "utils") (include "dispatcher")
-(include "token-man") (include "validate") #;crypt
-(include "message") (include "response-sync") (include "response-async")
+;; libs
+(include "utils") (include "dispatche") (include "crypt")
+(include "message") (include "response")
+;; user code
 (include "page")
 
 (text-handler  (lambda (to from content)

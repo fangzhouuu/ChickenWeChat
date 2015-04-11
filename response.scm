@@ -1,7 +1,20 @@
 (include "utils")
 (include "token-man")
-(use http-client)
+(use http-client sxml-serializer)
 
+;;; SYNC
+;; generate a sync response body
+(define sync-response
+  (lambda (from to msg)
+    (serialize-sxml `(xml
+                      (FromUserName ,from)
+                      (ToUserName ,to)
+                      (MsgType "text")
+                      (Content ,msg)
+                      (CreateTime ,(current-unix-time)))
+                    cdata-section-elements: '(FromUserName ToUserName
+                                              MsgType Content))))
+;;; ASYNC
 ;; https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN
 (define async-response
   (lambda (from to msg)
