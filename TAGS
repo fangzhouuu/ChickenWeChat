@@ -1,32 +1,0 @@
-
-token-man.scm,101
-(define fetch-access-tokenfetch-access-token6,183
-(define get-access-tokenget-access-token18,755
-
-response-sync.scm,41
-(define sync-responsesync-response4,41
-
-validate.scm,72
-(define validatevalidate5,51
-(define mk-signaturemk-signature19,631
-
-response-async.scm,44
-(define async-responseasync-response6,142
-
-utils.scm,566
-(define mk-res-buffermk-res-buffer10,215
-(define current-unix-timecurrent-unix-time19,395
-(define loglog24,495
-(define-syntax inspectinspect35,909
-(define substrsubstr46,1130
-(define-syntax nifnif54,1351
-(define-syntax-rule (sha1sum<-string str) (string->sha1sum str))sha1sum<-string59,1480
-(define-syntax-rule (string<-seconds str) (seconds->string str))string<-seconds60,1545
-(define-syntax-rule (string<-symbol str) (symbol->string str))string<-symbol62,1611
-(define-syntax-rule (symbol<-string str) (string->symbol str))symbol<-string63,1674
-
-message.scm,92
-(define mk-message-readermk-message-reader5,91
-(define parse-messageparse-message17,405
-
-app.scm,0

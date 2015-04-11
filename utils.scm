@@ -7,7 +7,7 @@
 ;; (define r (mk-res-buffer)) => void
 ;; (r "abc" "def") => void
 ;; (r) => "abcdef"
-(define mk-res-buffer
+(define make-res-buffer
   (lambda ()
     (let ([res ""])
       (lambda arg

@@ -1,8 +1,9 @@
-(use ssax)
+;; xml message handler
 (include "utils")
+(use ssax)
 
-;; order: ToUserName FromUserName CreateTime MsgType Content
-(define mk-message-reader
+;; order: ToUserName FromUserName CreateTime MsgType (Content/(Event EventKey))
+(define make-message-reader
   (lambda (msg-lst)
     (let ([message msg-lst])
       (lambda (name)
@@ -16,7 +17,8 @@
 
 (define parse-message
   (lambda (msg)
-    (with-input-from-string msg
-      (lambda ()
-        (cdadr ;; want: (*TOP* (xml >>((FromUserName ...) ...)<<))
-         (ssax:xml->sxml (current-input-port) '()))))))
+    (inspect 'incomming-sxml
+             (with-input-from-string msg
+               (lambda ()
+                 (cdadr ;; want: (*TOP* (xml >>((FromUserName ...) ...)<<))
+                  (ssax:xml->sxml (current-input-port) '())))))))

@@ -6,8 +6,7 @@
 (define async-response
   (lambda (from to msg)
     (let ([req-url  (string-append "https://api.weixin.qq.com/cgi-bin/message/custom/send?"
-                                   "access_token="
-                                   (get-access-token))]
+                                   "access_token=" (get-access-token))]
           [json-msg (with-output-to-string
                       (lambda () (json-write `#(("touser" . ,to)
                                            ("msgtype" . "text")
@@ -15,6 +14,5 @@
       (with-input-from-request req-url json-msg read-string))))
 
 ;; return a emtpy string when finished register async response
-(define finish-async-response
-  (lambda ()
-    ""))
+(define acknowledge-string
+  (lambda () ""))

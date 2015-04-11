@@ -3,14 +3,13 @@
 (use simple-sha1)
 
 (define validate
-  (lambda (req)
+  (lambda (query)
     (let* ([token     "wxtestqpwoeiru"]
-           [params    (request-content-query req)]
-           [timestamp (alist-ref 'timestamp params)]
-           [nonce     (alist-ref 'nonce params)]
-           [signature (alist-ref 'signature params)]
+           [timestamp (alist-ref 'timestamp query)]
+           [nonce     (alist-ref 'nonce query)]
+           [signature (alist-ref 'signature query)]
            ;; if there is no echostr, return "" instead of #f
-           [echostr   (alist-ref 'echostr params eqv? "")])
+           [echostr   (alist-ref 'echostr query eqv? "")])
       (nif (string=? signature (mk-signature timestamp nonce token))
            (begin (log "not validate") "not validate")
            (log "validate OK")
