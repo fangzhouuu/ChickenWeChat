@@ -61,3 +61,5 @@
 
 (define-syntax-rule (string<-symbol str) (symbol->string str))
 (define-syntax-rule (symbol<-string str) (string->symbol str))
+
+;; serialization

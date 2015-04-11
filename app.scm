@@ -2,7 +2,7 @@
 (use spiffy intarweb uri-common srfi-13)
 (use dissector)
 ;; libs
-(include "utils") (include "dispatche") (include "crypt")
+(include "utils") (include "dispatch") (include "crypt")
 (include "message") (include "response")
 ;; user code
 (include "page")

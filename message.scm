@@ -5,15 +5,19 @@
 ;; order: ToUserName FromUserName CreateTime MsgType (Content/(Event EventKey))
 (define make-message-reader
   (lambda (msg-lst)
-    (let ([message msg-lst])
+    (let ([message msg-lst] [cache (make-hash-table)])
       (lambda (name)
         (let loop ([msg message])
           (cond
-           [(null? msg) #f]
+           [(null? msg)
+            (if (hash-table-exist? cache name)
+                (hash-table-ref cache name) #f)]
            [(eqv? (caar msg) name)
-            ;(set! message (cdr msg))
+            (set! message (cdr msg))
             (cadar msg)]
-           [else (loop (cdr msg))]))))))
+           [else
+            (hash-table-set! cache (caar msg) (cadar msg))
+            (loop (cdr msg))]))))))
 
 (define parse-message
   (lambda (msg)

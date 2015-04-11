@@ -1,4 +1,4 @@
-(include "dispatcher")
+(include "dispatch")
 (use sxml-serializer)
 
 (page-handler (lambda ()

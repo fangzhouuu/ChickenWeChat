@@ -1,5 +1,5 @@
 (include "utils")
-(include "token-man")
+(include "crypt")
 (use http-client json)
 
 ;; https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN
