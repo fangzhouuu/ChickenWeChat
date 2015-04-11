@@ -43,4 +43,4 @@
                      header: '((content-type text/xml))))))
 
 (vhost-map `(("wx.vetrm.net" . ,wx-dispatcher)
-             ("res.wx.vetrm.net" . )))
+             ("res.wx.vetrm.net" . ,res-dispatcher)))

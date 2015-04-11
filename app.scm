@@ -5,6 +5,7 @@
 (include "utils") (include "dispatcher")
 (include "token-man") (include "validate") #;crypt
 (include "message") (include "response-sync") (include "response-async")
+(include "page")
 
 (text-handler  (lambda (to from content)
                  (case (symbol<-string (string-downcase content))
@@ -19,6 +20,8 @@
 
 (event-handler (lambda (to from event event-key)
                  (case (symbol<-string event-key)
+                   [(|EVT_PULL|)
+                    (sync-response to from "暂无新的消息")]
                    [(|EVT_LIKE|)
                     (sync-response to from "You like it!")]
                    [(|EVT_UNLIKE|)
