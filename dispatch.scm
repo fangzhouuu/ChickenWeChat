@@ -1,5 +1,4 @@
 (include "utils")
-(use dissector)
 
 (define text-handler  (make-parameter
                        (lambda (to from content)

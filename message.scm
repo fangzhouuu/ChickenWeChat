@@ -1,18 +1,17 @@
-;; xml message handler
-(include "utils")
 (use ssax)
+(include "utils")
 
 ;; order: ToUserName FromUserName CreateTime MsgType (Content/(Event EventKey))
 (define make-message-reader
   (lambda (msg-lst)
     (let ([message msg-lst] [cache (make-hash-table)])
-      (lambda (name)
+      (lambda (name-to-find)
         (let loop ([msg message])
           (cond
            [(null? msg)
-            (if (hash-table-exist? cache name)
-                (hash-table-ref cache name) #f)]
-           [(eqv? (caar msg) name)
+            (if (hash-table-exist? cache name-to-find)
+                (hash-table-ref cache name-to-find) #f)]
+           [(eqv? (caar msg) name-to-find)
             (set! message (cdr msg))
             (cadar msg)]
            [else

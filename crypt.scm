@@ -1,6 +1,6 @@
 ;; validation
-(include "utils")
 (use simple-sha1 http-client json)
+(include "utils")
 
 ;;; VALIDATION
 (define validate
@@ -11,12 +11,12 @@
            [signature (alist-ref 'signature query)]
            ;; if there is no echostr, return "" instead of #f
            [echostr   (alist-ref 'echostr query eqv? "")])
-      (nif (string=? signature (mk-signature timestamp nonce token))
+      (nif (string=? signature (make-signature timestamp nonce token))
            (begin (log "not validate") "not validate")
            (log "validate OK")
            echostr))))
 
-(define mk-signature
+(define make-signature
   (lambda (timestamp nonce token)
     (sha1sum<-string (apply string-append
                             (sort (list timestamp nonce token)
@@ -40,8 +40,6 @@
            [appsecret "225e3b8b6f2b6614f6bca0607dfd2e78"]
            [req-url   (string-append "https://api.weixin.qq.com/cgi-bin/token?"
                                      "grant_type=client_credential" "&"
-                                     "appid=" appid "&" "secret=" appsecret)])
-      (with-input-from-string (with-input-from-request req-url #f read-string)
-        (lambda ()
-          (let ([appsecret (json-read)])
-            (cdr (vector-ref appsecret 0))))))))
+                                     "appid=" appid "&" "secret=" appsecret)]
+           [token-vec (json<-string (with-input-from-request req-url #f read-string))])
+      (cdr (vector-ref token-vec 0)))))

@@ -1,5 +1,5 @@
-(include "dispatch")
 (use sxml-serializer)
+(include "dispatch")
 
 (page-handler (lambda ()
                 (serialize-sxml `(html

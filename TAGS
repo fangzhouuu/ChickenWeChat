@@ -1,43 +1,81 @@
 
-crypt.scm,175
+app.scm,0
+
+crypt.scm,179
 (define validatevalidate6,83
-(define mk-signaturemk-signature19,610
-(define get-access-tokenget-access-token26,936
-(define fetch-access-tokenfetch-access-token37,1343
+(define make-signaturemake-signature19,612
+(define get-access-tokenget-access-token26,940
+(define fetch-access-tokenfetch-access-token37,1347
+
+dispatch.scm,260
+(define text-handler  (make-parametertext-handler3,19
+(define event-handler (make-parameterevent-handler6,166
+(define page-handler  (make-parameterpage-handler9,349
+(define wx-dispatcherwx-dispatcher13,475
+(define res-dispatcherres-dispatcher37,1647
+
+logic.scm,80
+(define count-table #f)count-table5,56
+(define like-counterlike-counter7,81
 
 menu.scm,112
-(define create-menucreate-menu6,139
-(define get-menuget-menu40,2231
-(define delete-menudelete-menu50,2677
+(define create-menucreate-menu7,159
+(define get-menuget-menu40,2049
+(define delete-menudelete-menu48,2433
+
+message.scm,97
+(define make-message-readermake-message-reader5,110
+(define parse-messageparse-message21,646
 
 page.scm,0
 
-dispatch.scm,261
-(define text-handler  (make-parametertext-handler4,35
-(define event-handler (make-parameterevent-handler7,182
-(define page-handler  (make-parameterpage-handler10,365
-(define wx-dispatcherwx-dispatcher14,491
-(define res-dispatcherres-dispatcher38,1663
+persistence.scm,507
+(define picklepickle5,69
+(define unpickleunpickle13,382
+(define hasheq-serializehasheq-serialize25,767
+(define hasheq-deserializehasheq-deserialize29,846
+(define pickle-all #f)pickle-all33,925
+(define unpickle-all #f)unpickle-all34,948
+(define-syntax set-pickle/unpickle-allset-pickle/unpickle-all35,973
+(define pickle-hash-all #f)pickle-hash-all47,1286
+(define unpickle-hash-all #f)unpickle-hash-all48,1314
+(define-syntax set-pickle/unpickle-hash-allset-pickle/unpickle-hash-all49,1344
 
 response.scm,141
-(define sync-responsesync-response7,117
-(define async-responseasync-response19,633
-(define acknowledge-stringacknowledge-string30,1225
+(define sync-responsesync-response7,113
+(define async-responseasync-response19,629
+(define acknowledge-stringacknowledge-string29,1163
 
-utils.scm,570
-(define make-res-buffermake-res-buffer10,215
-(define current-unix-timecurrent-unix-time19,397
-(define loglog24,497
-(define-syntax inspectinspect35,911
-(define substrsubstr46,1132
-(define-syntax nifnif54,1353
-(define-syntax-rule (sha1sum<-string str) (string->sha1sum str))sha1sum<-string59,1482
-(define-syntax-rule (string<-seconds str) (seconds->string str))string<-seconds60,1547
-(define-syntax-rule (string<-symbol str) (symbol->string str))string<-symbol62,1613
-(define-syntax-rule (symbol<-string str) (string->symbol str))symbol<-string63,1676
+user-man.scm,335
+(define create-groupcreate-group6,90
+(define get-groupget-group16,579
+(define delete-groupdelete-group23,894
+(define which-group-userwhich-group-user33,1383
+(define to-group-userto-group-user41,1769
+(define get-user-listget-user-list53,2387
+(define get-user-infoget-user-info61,2722
+(define superuser?superuser?72,3231
 
-message.scm,97
-(define make-message-readermake-message-reader6,133
-(define parse-messageparse-message18,449
-
-app.scm,0
+utils.scm,1410
+(define make-res-buffermake-res-buffer9,180
+(define current-unix-timecurrent-unix-time18,362
+(define loglog23,462
+(define log-fatallog-fatal31,694
+(define-syntax inspectinspect42,1115
+(define substrsubstr53,1336
+(define-syntax-rule (nif test false-body true-body ...)nif62,1631
+(define-syntax begin1begin165,1734
+(define-syntax-rule (sha1sum<-string obj) (string->sha1sum obj))sha1sum<-string70,1821
+(define-syntax-rule (string<-seconds sec) (seconds->string sec))string<-seconds71,1886
+(define-syntax-rule (string<-symbol obj) (symbol->string obj))string<-symbol73,1952
+(define-syntax-rule (symbol<-string obj) (string->symbol obj))symbol<-string74,2015
+(define-syntax-rule (alist<-hash-table obj) (hash-table->alist obj))alist<-hash-table75,2078
+(define-syntax-rule (vector<-list obj) (list->vector obj))vector<-list77,2148
+(define-syntax-rule (list<-vector obj) (vector->list obj))list<-vector78,2207
+(define-syntax-rule (string<-json obj) (with-output-to-string (lambda () (json-write obj))))string<-json81,2275
+(define-syntax-rule (json<-string obj) (with-input-from-string obj (lambda () (json-read))))json<-string82,2368
+(define sxml<-jsonsxml<-json85,2516
+(define-syntax-rule (when-superuser? user action ...)when-superuser?108,3328
+(define make-hasheqmake-hasheq116,3644
+(define alist<-hasheqalist<-hasheq120,3712
+(define hasheq<-alisthasheq<-alist124,3777
