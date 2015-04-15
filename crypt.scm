@@ -19,8 +19,9 @@
 (define make-signature
   (lambda (timestamp nonce token)
     (sha1sum<-string (apply string-append
-                            (sort (list timestamp nonce token)
-                                  string<?)))))
+                            (sort/ string<?
+                                   (list timestamp nonce token))))))
+
 ;;; ACCESS TOKEN
 ;; https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
 (define get-access-token

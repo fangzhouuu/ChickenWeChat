@@ -2,7 +2,7 @@
 (use srfi-69) ;;hash-table
 (use dissector trace)
 
-;; resposne writer
+;; resposne buffer
 ;; (define r (mk-res-buffer)) => void
 ;; (r "abc" "def") => void
 ;; (r) => "abcdef"
@@ -14,10 +14,9 @@
             res
             (set! res (apply string-append res arg)))))))
 
+;;;; logging and debugging facility
 ;; time
-(define current-unix-time
-  (lambda ()
-    (substr (->string (current-seconds)) 0 -2)))
+(define current-unix-time (lambda () (substr (->string (current-seconds)) 0 -2)))
 
 ;; logging
 (define log
@@ -41,15 +40,11 @@
 ;; (inspect 'list '(1 2 3)) => '(1 2 3) ; and print out: "list: (1 2 3)"
 (define-syntax inspect
   (syntax-rules ()
-    [(_ obj)
-     (begin (log "Inspecting... : ~A" obj)
-            obj)]
-    [(_ name obj)
-     (begin (log "inspecting ~A: ~A" name obj)
-            obj)]))
+    [(_ obj) (begin (log "Inspecting... : ~A" obj) obj)]
+    [(_ name obj) (begin (log "inspecting ~A: ~A" name obj) obj)]))
 
-;; string utils
-;;
+;;;; string utils
+;; support negtive index (substr "abc" 0 -1) => "ab"
 (define substr
   (lambda (obj start end)
     (let* ([len   (string-length obj)]
@@ -57,29 +52,39 @@
            [end   (modulo end len)])
       (substring obj start end))))
 
+;;;; misc macros
 ;; aliasing some useful stuff
 ;; (nif (eq? 1 1) "false" (display "true") "true") => (print "true)"true"
 (define-syntax-rule (nif test false-body true-body ...)
   (if test (begin true-body ...) false-body))
 
-(define-syntax begin1
-  (syntax-rules ()
-    [(_ br b1 ...)
-     (begin b1 ... br)]))
+;; (begin1 "abc" "def") => (begin "def" "abc")
+(define-syntax-rule (begin1 br b1 ...) (begin b1 ... br))
 
-(define-syntax-rule (sha1sum<-string obj) (string->sha1sum obj))
-(define-syntax-rule (string<-seconds sec) (seconds->string sec))
+;;;; my version of misc procedures
+;; (sort/ f lst) === (sort lst f)
+(define-syntax-rule (sort/ f lst) (sort lst f))
+(define-syntax-rule (hash-table-map/ f hash) (hash-table-map hash f))
 
-(define-syntax-rule (string<-symbol obj) (symbol->string obj))
-(define-syntax-rule (symbol<-string obj) (string->symbol obj))
-(define-syntax-rule (alist<-hash-table obj) (hash-table->alist obj))
+;;;; type convention and some data structure
+(define (sha1sum<-string obj) (string->sha1sum obj))
+(define (string<-seconds sec) (seconds->string sec))
 
-(define-syntax-rule (vector<-list obj) (list->vector obj))
-(define-syntax-rule (list<-vector obj) (vector->list obj))
+(define (string<-symbol obj) (symbol->string obj))
+(define (symbol<-string obj) (string->symbol obj))
+(define (alist<-hash-table obj) (hash-table->alist obj))
+
+(define (vector<-list obj) (list->vector obj))
+(define (list<-vector obj) (vector->list obj))
 
 ;; json
-(define-syntax-rule (string<-json obj) (with-output-to-string (lambda () (json-write obj))))
-(define-syntax-rule (json<-string obj) (with-input-from-string obj (lambda () (json-read))))
+(define (string<-json obj) (with-output-to-string (lambda () (json-write obj))))
+(define (json<-string obj) (with-input-from-string obj (lambda () (json-read))))
+
+;; hasheq
+(define make-hasheq (lambda () (make-hash-table test: eq?)))
+(define alist<-hasheq (lambda (h) (alist<-hash-table h)))
+(define hasheq<-alist (lambda (h) (alist->hash-table h test: eq?)))
 
 ;; works with 'json' egg's json scheme representation
 (define sxml<-json
@@ -112,15 +117,3 @@
                  user
                  (with-output-to-string (lambda ()
                                           (write '(action ...)))))))
-
-(define make-hasheq
-  (lambda ()
-    (make-hash-table test: eq?)))
-
-(define alist<-hasheq
-  (lambda (h)
-    (alist<-hash-table h)))
-
-(define hasheq<-alist
-  (lambda (h)
-    (alist->hash-table h test: eq?)))

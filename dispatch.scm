@@ -7,8 +7,8 @@
                        (lambda (to from event event-key)
                          (sync-response to from (string-append event " " event-key)))))
 (define page-handler  (make-parameter
-                       (lambda ()
-                         "<p>Nothing here...</p>")))
+                       (lambda (continue)
+                         (continue))))
 
 (define wx-dispatcher
   (lambda (continue)
@@ -37,7 +37,7 @@
 (define res-dispatcher
   (lambda (continue)
     (let* ([res-buf (make-res-buffer)])
-      (res-buf ((page-handler)))
+      (res-buf ((page-handler) continue))
       (send-response code: 200 body: (res-buf)
                      header: '((content-type text/xml))))))
 

@@ -1,12 +1,12 @@
 (use miscmacros http-client)
 (include "utils")
 (include "crypt")
-(include "persistence")
+;(include "persistence")
 
 (define create-group
   (lambda (group-id group-name)
     (let ([url (string-append "https://api.weixin.qq.com/cgi-bin/groups/create?"
-                                   "access_token=" (get-access-token))]
+                              "access_token=" (get-access-token))]
           [msg (string<-json `#(("group" .
                                  #(("id"   . ,group-id)
                                    ("name" . ,group-name)))))])
@@ -16,14 +16,14 @@
 (define get-group
   (lambda ()
     (let ([url (string-append "https://api.weixin.qq.com/cgi-bin/groups/get?"
-                                  "access_token=" (get-access-token))])
+                              "access_token=" (get-access-token))])
       (log "Request for Getting Groups with response: ~A"
            (json<-string (with-input-from-request url #f read-string))))))
 
 (define delete-group
   (lambda (group-id group-name)
     (let ([url (string-append "https://api.weixin.qq.com/cgi-bin/groups/delete?"
-                                   "access_token=" (get-access-token))]
+                              "access_token=" (get-access-token))]
           [msg (string<-json `#(("group" .
                                  #(("id"   . ,group-id)
                                    ("name" . ,group-name)))))])
@@ -47,8 +47,8 @@
       (log "Request for Move ~A to Group ~A with Response: ~A"
            open-id group-id
            (json<-string (with-input-from-request url msg read-string))))))
-;(to-group-user 100 "oY-bVt1TnmNxMGhOoZZEkLO5vRPw")
-;(display (which-group-user "oY-bVt1TnmNxMGhOoZZEkLO5vRPw"))
+;;(to-group-user 100 "oY-bVt1TnmNxMGhOoZZEkLO5vRPw")
+;;(display (which-group-user "oY-bVt1TnmNxMGhOoZZEkLO5vRPw"))
 
 (define get-user-list
   (lambda ()
@@ -56,7 +56,7 @@
                               "access_token=" (get-access-token)
                               #;"&next_openid=NEXT_OPENID")])
       (json<-string (with-input-from-request url #f read-string)))))
-;(display (get-user-list))
+;;(display (get-user-list))
 
 (define get-user-info
   (lambda (open-id)
@@ -66,11 +66,10 @@
                               "lang=zh_CN")])
       ;; translate to sxml, thus could use the (make-message-reader) to parse it
       (sxml<-json (json<-string (with-input-from-request url #f read-string))))))
-;(display (get-user-info "oY-bVt1TnmNxMGhOoZZEkLO5vRPw"))
-
+;;(display (get-user-info "oY-bVt1TnmNxMGhOoZZEkLO5vRPw"))
 
 (define superuser?
   (lambda (open-id)
-    (case (which-group-user openid)
+    (case (which-group-user open-id)
       [(100) #t]
       [else #f])))
