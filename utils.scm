@@ -67,15 +67,15 @@
 (define-syntax-rule (hash-table-map/ f hash) (hash-table-map hash f))
 
 ;;;; type convention and some data structure
-(define (sha1sum<-string obj) (string->sha1sum obj))
-(define (string<-seconds sec) (seconds->string sec))
+(define sha1sum<-string string->sha1sum)
+(define string<-seconds seconds->string)
 
-(define (string<-symbol obj) (symbol->string obj))
-(define (symbol<-string obj) (string->symbol obj))
-(define (alist<-hash-table obj) (hash-table->alist obj))
+(define string<-symbol symbol->string)
+(define symbol<-string string->symbol)
+(define alist<-hash-table hash-table->alist)
 
-(define (vector<-list obj) (list->vector obj))
-(define (list<-vector obj) (vector->list obj))
+(define vector<-list list->vector)
+(define list<-vector vector->list)
 
 ;; json
 (define (string<-json obj) (with-output-to-string (lambda () (json-write obj))))
