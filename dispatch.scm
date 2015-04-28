@@ -6,6 +6,9 @@
 (define event-handler (make-parameter
                        (lambda (to from event event-key)
                          (sync-response to from (string-append event " " event-key)))))
+(define voice-handler (make-parameter
+                       (lambda (to from recognition)
+                         (sync-response to from (string-append "You Said: " recognition)))))
 (define page-handler  (make-parameter
                        (lambda (continue)
                          (continue))))
@@ -19,6 +22,7 @@
            [res-buf (make-res-buffer)])
       (res-buf (validate query))
       (when form
+        (log "form: ~A" form)
         (res-buf (let* ([reader (make-message-reader
                                  (parse-message (string<-symbol (caar form))))]
                         [to     (reader 'ToUserName)]
@@ -29,6 +33,8 @@
                       ((text-handler) to from (reader 'Content))]
                      [(|event|)
                       ((event-handler) to from (reader 'Event) (reader 'EventKey))]
+                     [(|voice|)
+                      ((voice-handler) to from (reader 'Recognition))]
                      [else
                       (sync-response to from "don't know what to say...")]))))
       (send-response code: 200 body: (res-buf)

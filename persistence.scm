@@ -24,7 +24,8 @@
 
 (define hasheq-serialize
   (lambda (h fn)
-    (pickle (alist<-hasheq h) fn)))
+    (when h
+      (pickle (alist<-hasheq h) fn))))
 
 (define hasheq-deserialize
   (lambda (fn)
