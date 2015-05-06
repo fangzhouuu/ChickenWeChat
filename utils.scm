@@ -1,4 +1,4 @@
-(use miscmacros json s11n)
+(use miscmacros json s11n simple-sha1)
 (use srfi-69) ;;hash-table
 (use dissector trace)
 
