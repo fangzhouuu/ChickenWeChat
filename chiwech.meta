@@ -1,0 +1,7 @@
+;;;
+((synopsis "A small and weak WeChat SDK")
+ (author "fangzhou")
+ (catagory web)
+ (license "BSD")
+ (depends spiffy intarweb json miscmacros json s11n simple-sha1 http-client sxml-serializer uri-common ssax matchable)
+ )
